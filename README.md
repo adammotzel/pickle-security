@@ -51,6 +51,6 @@ When analyzing, certain opcodes can indicate potentially malicious code or suspi
 - **Complexity**: The more complex the pickle (using many of the above opcodes), the more likely it is to be used for malicious purposes. Simple data structures are generally safer.
 - **Source Verification**: Always verify the source of the pickle data before unpickling. Consider using safer serialization formats (like JSON) for untrusted data.
 
-Be particularly cautious with any opcode that involves executing code, constructing objects, or referencing external modules. Always treat unpickling from untrusted sources as a security risk, and consider safer alternatives whenever possible. Using an isolated environment, such as a Docker container, is a safe approach to reviewing potentially malicious code. 
+Be particularly cautious with any opcode that involves executing code, constructing objects, or referencing external modules. Always treat unpickling from untrusted sources as a security risk, and consider safer alternatives whenever possible.
 
 It’s important to note that while Docker provides isolation, it doesn’t make unpickling inherently safe. This repository simply demonstrates how using an isolated Docker container can add an extra layer of security when unpacking pickle files.
