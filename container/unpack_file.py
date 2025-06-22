@@ -1,26 +1,22 @@
 """
-Unpack binary file.
+Search current directory recursively for all .pkl files and unpack them. 
+Output is written to new text files with '_unpacked' appended to the original 
+filename.
 """
 
 import pickletools
+from pathlib import Path
 
 
-def inspect_pickle(input_filename: str, output_filename: str):
-    """
-    Unpack a pkl file without executing.
-    """
+current_dir = Path.cwd()
 
-    with open(input_filename, "rb") as in_file:
-        with open(output_filename, "w") as out_file:
-            pickletools.dis(in_file, out_file)
+for pkl_file in current_dir.rglob("*.pkl"):
 
-    print("\nUNPACK COMPLETE\n")
+    unpacked_filename = pkl_file.with_name(pkl_file.stem + "_unpacked.txt")
 
+    with pkl_file.open("rb") as in_file, unpacked_filename.open("w") as out_file:
+        pickletools.dis(in_file, out_file)
 
-input_file = "sample.pkl"
-output_file = "sample_unpacked.txt"
+    print(f"Unpacked: {pkl_file} to {unpacked_filename}")
 
-inspect_pickle(
-    input_filename=input_file,
-    output_filename=output_file
-)
+print("\nAll pickle files unpacked.\n")

@@ -1,3 +1,10 @@
+"""
+Run the deserialization process.
+
+Place your pickle files in the `container/` directory, then execute 
+this script.
+"""
+
 import subprocess
 import os
 
@@ -14,4 +21,4 @@ commands = [
 for command in commands:
     subprocess.run(command, check=True)
 
-print("commands executed")
+print("\nProcess complete.\n")

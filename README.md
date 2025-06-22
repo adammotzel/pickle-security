@@ -1,16 +1,29 @@
 # Pickle Security
+
 A simple method for securely reading contents of pickle files using an isolated Docker container.
+
+
+## Requirements
+
+This project only uses packages from the Python standard library. The only other software dependency is Docker, which must be installed on your machine.
+
+
+## Running the Code
 
 Steps to run this code:
 
-1. Ensure `docker` daemon is running (you can just launch the desktop app)
-2. Execute `run.py`
+1. Ensure Docker daemon is running (you can just launch the desktop app)
+2. Upload your `pkl` files to the `container/` directory 
+3. Execute `run.py`
 
-`run.py` builds a Docker image using the `Dockerfile` file, then creates a Docker container using the image and bind mounts `container`.
+The `run.py` script builds a Docker image using the `Dockerfile`, then creates a Docker container using the image and bind mounts the `container/` directory.
 
-The container will execute `container/unpack_file.py`, which reads a `pkl` file (using `pickletools`) and unpacks it into a `txt` file in the mounted directory. Both the container and the image are deleted upon successful execution of `run.py`.
+The container will execute `container/unpack_file.py`, which reads all `pkl` files in the mounted `container/` directory (using `pickletools`) and unpacks them into `txt` files. Both the container and the image are deleted upon successful execution of `run.py`.
 
-After deserializing the pickle file, you can explore its contents in `container/contents.txt`. This may help you identify malicious code in the pickle file that you wouldn't want executed in your host system.
+After deserializing the pickle files, you can explore their contents in the `txt` files. This may help you identify malicious code that you wouldn't want executed in your host system.
+
+
+## Opcodes
 
 When analyzing, certain opcodes can indicate potentially malicious code or suspicious behavior, especially if the pickled data comes from an untrusted source. Here are some opcodes to watch for:
 
