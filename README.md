@@ -2,10 +2,13 @@
 
 A simple method for securely reading contents of pickle files using an isolated Docker container.
 
+It's important to note that while Docker provides isolation, it doesn’t make unpickling *inherently* safe. This repository simply demonstrates how using an isolated, tightly sandboxed Docker container can add an extra layer of security when unpacking pickle files.
+
 
 ## Requirements
 
-This project only uses packages from the Python standard library. The only other software dependency is Docker, which must be installed on your machine.
+- Python 3+
+- **Docker** (must be installed and running)
 
 
 ## Running the Code
@@ -14,11 +17,11 @@ Steps to run this code:
 
 1. Ensure Docker daemon is running (you can just launch the desktop app)
 2. Upload your `pkl` files to the `container/` directory 
-3. Execute `run.py`
+3. Execute `run.sh`
 
-The `run.py` script builds a Docker image using the `Dockerfile`, then creates a Docker container using the image and bind mounts the `container/` directory.
+The `run.sh` script builds a Docker image using the `Dockerfile`, then creates a Docker container using the image with strict isolation and security settings (see `run.sh` for details).
 
-The container will execute `container/unpack_file.py`, which reads all `pkl` files in the mounted `container/` directory (using `pickletools`) and unpacks them into `txt` files. Both the container and the image are deleted upon successful execution of `run.py`.
+The container will execute `container/unpack_file.py`, which reads all `pkl` files in the mounted `container/` directory (using `pickletools`) and unpacks them into `txt` files. The container is deleted upon successful execution of `run.sh`.
 
 After deserializing the pickle files, you can explore their contents in the `txt` files. This may help you identify malicious code that you wouldn't want executed in your host system.
 
@@ -65,5 +68,3 @@ When analyzing, certain opcodes can indicate potentially malicious code or suspi
 - **Source Verification**: Always verify the source of the pickle data before unpickling. Consider using safer serialization formats (like JSON) for untrusted data.
 
 Be particularly cautious with any opcode that involves executing code, constructing objects, or referencing external modules. Always treat unpickling from untrusted sources as a security risk, and consider safer alternatives whenever possible.
-
-It’s important to note that while Docker provides isolation, it doesn’t make unpickling inherently safe. This repository simply demonstrates how using an isolated Docker container can add an extra layer of security when unpacking pickle files.
