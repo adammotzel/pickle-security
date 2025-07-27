@@ -1,3 +1,5 @@
+#!/bin/bash
+
 ## Run the deserialization process.
 ## Place your pickle files in the `container/` directory, then execute this script.
 
@@ -9,8 +11,6 @@
 ## 5. Limit the number of processes to 50 (can be more or less)
 ## 6. Drop all Linux capabilities
 ## 7. revent processes from gaining extra privileges
-
-#!/bin/bash
 
 docker build -t pkl-inspection .
 docker container run --name inspect-pkl \
