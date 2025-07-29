@@ -1,6 +1,0 @@
-    0: \x80 PROTO      4
-    2: \x95 FRAME      16
-   11: \x8c SHORT_BINUNICODE 'Hello World!'
-   25: \x94 MEMOIZE    (as 0)
-   26: .    STOP
-highest protocol among opcodes = 4

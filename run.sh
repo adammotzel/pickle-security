@@ -12,6 +12,11 @@
 ## 6. Drop all Linux capabilities
 ## 7. revent processes from gaining extra privileges
 
+if ! find ./container -maxdepth 1 -type f -name "*.pkl" | grep -q .; then
+    echo "No .pkl files found in './container'. Aborting process."
+    return
+fi
+
 docker build -t pkl-inspection .
 docker container run --name inspect-pkl \
     --mount type=bind,source="$PWD/container",target=/app \

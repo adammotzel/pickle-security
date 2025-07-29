@@ -1,9 +1,3 @@
-"""
-Search current directory recursively for all .pkl files and unpack them. 
-Output is written to new text files with '_unpacked' appended to the original 
-filename.
-"""
-
 import pickletools
 from pathlib import Path
 
@@ -32,5 +26,3 @@ for pkl_file in current_dir.rglob("*.pkl"):
         print(f"Unpacked: {pkl_file} to {unpacked_filename}")
     except Exception as e:
         print(f"Failed to unpack {pkl_file}: {e}")
-
-print("\Process complete.\n")

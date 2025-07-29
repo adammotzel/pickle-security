@@ -1,7 +1,3 @@
-"""
-Create sample pickle file.
-"""
-
 import pickle as pkl
 
 
