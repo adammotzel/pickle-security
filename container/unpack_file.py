@@ -1,7 +1,6 @@
 import pickletools
 from pathlib import Path
 
-
 # 5 MB limit -- can be changed
 MAX_SIZE_BYTES = 5 * 1024 * 1024
 

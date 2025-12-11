@@ -1,7 +1,5 @@
 # Pickle Security
 
-A simple method for securely reading contents of pickle files using an isolated Docker container.
-
 This repository demonstrates how using an isolated, tightly sandboxed Docker container can add extra security when unpacking pickle files. It does not make unpickling *inherently* safe.
 
 
@@ -18,15 +16,15 @@ Steps to run this code:
 
 1. Ensure Docker daemon is running (you can just launch the desktop app)
 2. Upload your `pkl` files to the `container/` directory 
-3. Execute `run.sh`
+3. Execute `scripts/run.sh`
 
-The `run.sh` script builds a Docker image using the `Dockerfile`, then creates a Docker container using the image with strict isolation and security settings (see `run.sh` for details).
+The `run.sh` script builds a Docker image using the `Dockerfile`, then creates a Docker container using the image with strict isolation and security settings.
 
 The container will execute `container/unpack_file.py`, which reads all `pkl` files in the mounted `container/` directory (using `pickletools`) and unpacks them into `txt` files. The container is deleted upon successful execution of `run.sh`.
 
 After deserializing the pickle files, you can explore their contents in the `txt` files. This may help you identify malicious code that you wouldn't want executed in your host system.
 
-You can clean up the remaining artifacts by executing the `cleanup.sh` script (`pkl` files, `txt` files, the Docker image, etc.).
+You can clean up the remaining artifacts by executing `scripts/cleanup.sh` (`pkl` files, `txt` files, Docker image, etc.).
 
 
 ## Opcodes
