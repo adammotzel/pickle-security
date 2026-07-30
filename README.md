@@ -2,13 +2,11 @@
 
 This repository demonstrates how using an isolated, tightly sandboxed Docker container can add extra security when unpacking pickle files. It does not make unpickling *inherently* safe.
 
-
 ## Requirements
 
 - Python 3+
 - **Docker** (must be installed and running)
 - A bash-compatible shell
-
 
 ## Running the Code
 
@@ -26,46 +24,6 @@ After deserializing the pickle files, you can explore their contents in the `txt
 
 You can clean up the remaining artifacts by executing `scripts/cleanup.sh` (`pkl` files, `txt` files, Docker image, etc.).
 
-
 ## Opcodes
 
-When analyzing, certain opcodes can indicate potentially malicious code or suspicious behavior, especially if the pickled data comes from an untrusted source. Here are some opcodes to watch for:
-
-### 1. GLOBAL
-- **Purpose**: References a class or function from a module.
-- **Malicious Indicator**: If the global object is from a suspicious or unexpected module, it could lead to execution of harmful code when the module is imported.
-
-### 2. REDUCE
-- **Purpose**: Indicates that an object can be constructed using a callable (e.g., a class constructor).
-- **Malicious Indicator**: If used with unexpected classes or functions, it may indicate an attempt to execute arbitrary code during unpickling.
-
-### 3. CALL
-- **Purpose**: Calls a callable object with specified arguments.
-- **Malicious Indicator**: A `CALL` opcode could invoke arbitrary functions, especially if the function being called is not well-known or is from an untrusted source.
-
-### 4. SETITEM / APPEND
-- **Purpose**: Used to populate collections (lists, dictionaries).
-- **Malicious Indicator**: If these opcodes are used in a way that constructs unexpected or harmful data structures, it may signal malicious intent.
-
-### 5. INST
-- **Purpose**: Creates an instance of a class.
-- **Malicious Indicator**: Instances of classes that are not expected or are from untrusted modules can lead to malicious behavior.
-
-### 6. EXEC
-- **Purpose**: Executes a code object.
-- **Malicious Indicator**: If this opcode appears, it can execute arbitrary code, posing a significant security risk.
-
-### 7. PUT
-- **Purpose**: Stores a value in a local variable.
-- **Malicious Indicator**: Storing unexpected values can indicate manipulation of the local state, potentially leading to harmful consequences.
-
-### 8. BUILD
-- **Purpose**: Constructs an object from its attributes after unpacking.
-- **Malicious Indicator**: If the construction process involves unexpected classes or attributes, it can indicate attempts to manipulate objects in harmful ways.
-
-### General Cautions
-- **Imported Modules**: Pay attention to any imported modules referenced by `GLOBAL` or `INST` opcodes. If they are common libraries but not expected in your context, investigate further.
-- **Complexity**: The more complex the pickle (using many of the above opcodes), the more likely it is to be used for malicious purposes. Simple data structures are generally safer.
-- **Source Verification**: Always verify the source of the pickle data before unpickling. Consider using safer serialization formats (like JSON) for untrusted data.
-
-Be particularly cautious with any opcode that involves executing code, constructing objects, or referencing external modules. Always treat unpickling from untrusted sources as a security risk, and consider safer alternatives whenever possible.
+See [docs/OPCODES.md](docs/OPCODES.md) for details on opcodes to look out for.
